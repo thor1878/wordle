@@ -138,20 +138,48 @@ function checkWord(word, row) {
     } else {
         let tiles = row.querySelectorAll('.board-tile');
 
+        // Animate tiles
+        tiles.forEach((tile, i) => {
+            tile.style.animationName = 'rotateTile';
+            tile.style.animationDelay = `${i/4}s`;
+        })
+
+
+        // Change tiles color
+        // for (let i = 0; i < word.length; i++) {
+        //     if (word[i] === chosenWord[i]) {                
+        //         tiles[i].style.backgroundColor = 'var(--green)';
+        //         tiles[i].style.borderColor = 'var(--green)';
+        //     } else if (chosenWord.includes(word[i])) {
+        //         tiles[i].style.backgroundColor = 'var(--yellow)';
+        //         tiles[i].style.borderColor = 'var(--yellow)';
+        //     } else {
+        //         tiles[i].style.backgroundColor = 'var(--gray)';
+        //         tiles[i].style.borderColor = 'var(--gray)';
+        //     }
+
+        //     tiles[i].style.color = 'var(--white)';  
+        // }
         for (let i = 0; i < word.length; i++) {
             if (word[i] === chosenWord[i]) {                
-                tiles[i].style.backgroundColor = 'var(--green)';
-                tiles[i].style.borderColor = 'var(--green)';
+                tiles[i].style.setProperty('--backgroundColor', 'var(--green)');
+                tiles[i].style.setProperty('--borderColor', 'var(--green)');
+                document.querySelector(`#${word[i].toUpperCase()}`).style.backgroundColor = 'var(--green)';
             } else if (chosenWord.includes(word[i])) {
-                tiles[i].style.backgroundColor = 'var(--yellow)';
-                tiles[i].style.borderColor = 'var(--yellow)';
+                tiles[i].style.setProperty('--backgroundColor', 'var(--yellow)');
+                tiles[i].style.setProperty('--borderColor', 'var(--yellow)');
+                document.querySelector(`#${word[i].toUpperCase()}`).style.backgroundColor = 'var(--yellow)';
             } else {
-                tiles[i].style.backgroundColor = 'var(--gray)';
-                tiles[i].style.borderColor = 'var(--gray)';
+                tiles[i].style.setProperty('--backgroundColor', 'var(--gray)');
+                tiles[i].style.setProperty('--borderColor', 'var(--gray)');
+                document.querySelector(`#${word[i].toUpperCase()}`).style.backgroundColor = 'var(--darkGray)';
             }
 
-            tiles[i].style.color = 'var(--white)';  
+            tiles[i].style.setProperty('--color', 'var(--white)'); 
         }
+
+
+
         // Remove class from row and change active tile
         row.classList.remove('row-full');
         
