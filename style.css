@@ -90,6 +90,7 @@ body {
   background-color: var(--lightGray);
   border: none;
   font-weight: bold;
+  font-size: 1.5vh;
   /* border: 2x solid green; */
   border-radius: 5px;
   margin: 0% 0.4%;
