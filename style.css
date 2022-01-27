@@ -1,0 +1,101 @@
+/* Global Styles & Colors */
+:root {
+  --green: #538d4e;
+  --yellow: #b59f3b;
+  --lightGray: #d8d8d8;
+  --gray: #86888a;
+  --darkGray: #939598;
+  --white: #fff;
+  --black: #212121;
+}
+
+body {
+  margin: 0;
+}
+
+#main {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  width: 69vh;
+  /* border: 2px solid gray; */
+  box-sizing: border-box;
+  font-family: Arial;
+}
+
+#header {
+  height: 8vh;
+  width: 100%;
+  border-bottom: 1px solid var(--lightGray);
+  text-align: center; 
+}
+
+#title {
+  font-size: 5vh;
+  letter-spacing: 4px;
+  font-weight: bold;
+  /* border: 2px solid red; */
+  height: 8vh;
+  line-height: 8vh;
+}
+
+#game-board {
+  /* border: 2px solid lightgreen; */
+  margin: 5% 0%;
+  height: 62vh;
+  width: 67%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.board-row {
+  /* border: 2px solid palevioletred; */
+  height: calc(92%/6);
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+}
+
+.board-tile {
+  border: 2px solid var(--lightGray);
+  height: 100%;
+  width: calc(92%/5);
+  box-sizing: border-box;
+}
+
+#keyboard {
+  height: 30vh;
+  width: 100%;
+  /* border: 2px solid purple; */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 1vh;
+}
+
+.keyboard-row {
+  height: calc(95%/3);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.key-button {
+  height: 100%;
+  width: calc(90%/10);
+  background-color: var(--lightGray);
+  border: none;
+  font-weight: bold;
+  /* border: 2x solid green; */
+  border-radius: 5px;
+  margin: 0% 0.4%;
+  cursor: pointer;
+}
+
+#ENTER, #DEL {
+  width: 14%;
+}
