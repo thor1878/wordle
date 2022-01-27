@@ -4,6 +4,8 @@ const NUM_COLS = 5;
 var allWords;
 var chosenWord;
 
+var keyboardActive = true;
+
 // Main function that runs when all contents are loaded
 window.onload = function () {
     fetch('words.json')
@@ -72,6 +74,8 @@ function createKeyboard() {
 
 // Handle the press of a single key
 function pressKey(key) {
+    if (!keyboardActive) return;
+
     let activeTile = document.querySelector('.active-tile');
 
     // Key pressed between A - Z
@@ -85,6 +89,8 @@ function pressKey(key) {
         } else {
             activeTile.parentNode.classList.add('row-full');
         }
+
+        animateKey(key);
         
     // ENTER key pressed
     } else if (key === 'ENTER') {
@@ -102,6 +108,8 @@ function pressKey(key) {
             showError('Please enter 5 letters!');
         }
 
+        animateKey(key);
+
     // DELETE or BACKSPACE key pressed
     } else if (key === 'DEL' || key === 'BACKSPACE') {
         if (!activeTile) {
@@ -116,9 +124,11 @@ function pressKey(key) {
         } else {
             showError('Enter a key instead of deleting');            
         }
+
+        animateKey(key);
     }
 
-    animateKey(key);
+    
 }
 
 // Check if the entered word is in the list and how many of the letters are correct
@@ -147,6 +157,10 @@ function checkWord(word, row) {
         
         if (row.nextElementSibling) {
             row.nextElementSibling.firstElementChild.classList.add('active-tile');
+        }
+
+        if (word === chosenWord) {
+            keyboardActive = false;
         }
     }
 }
