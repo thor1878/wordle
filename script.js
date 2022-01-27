@@ -4,7 +4,20 @@ const NUM_COLS = 5;
 var allWords;
 var chosenWord;
 
-// Create a 5 x 6 board of tiles
+// Main function that runs when all contents are loaded
+window.onload = function () {
+    fetch('words.json')
+    .then(response => response.json())
+    .then(data => allWords = data.words)
+    .then(() => {
+        // chosenWord = allWords[Math.floor(Math.random() * allWords.length)];
+        chosenWord = 'basic';
+        createBoard();
+        createKeyboard();
+    })
+}
+
+// Create a NUM_COLS x NUM_ROWS board of tiles
 function createBoard() {
     let gameBoard = document.querySelector("#game-board");
 
@@ -50,6 +63,9 @@ function createKeyboard() {
         keyButton.onclick = function () {
             pressKey(key);
         };
+        keyButton.onanimationend = function () {
+            keyButton.style.animationName = 'none';
+        }
         keyboardRow.appendChild(keyButton);
     }
 }
@@ -58,30 +74,38 @@ function createKeyboard() {
 function pressKey(key) {
     let activeTile = document.querySelector('.active-tile');
 
+    // Key pressed between A - Z
     if (key.length === 1 && key.match(/[A-Z]/) && activeTile) {
-
+        
         activeTile.innerHTML = key;
         activeTile.classList.remove('active-tile');
-
+        
         if (activeTile.nextElementSibling) {
             activeTile.nextElementSibling.classList.add('active-tile');
         } else {
             activeTile.parentNode.classList.add('row-full');
         }
-
+        
+    // ENTER key pressed
     } else if (key === 'ENTER') {
         let row = document.querySelector('.row-full');
-
+        
         if (row) {
-            let word = [...row.querySelectorAll('.board-tile')].map(tile => tile.innerHTML).join('').toLowerCase();
+            // word is a string of lowercase letters
+            let word = [...row.querySelectorAll('.board-tile')]
+            .map(tile => tile.innerHTML)
+            .join('')
+            .toLowerCase();
+            
             checkWord(word, row);
         } else {
             showError('Please enter 5 letters!');
         }
 
+    // DELETE or BACKSPACE key pressed
     } else if (key === 'DEL' || key === 'BACKSPACE') {
         if (!activeTile) {
-            let lastTileInRow = document.querySelector('.row-full').querySelectorAll('.board-tile')[4];
+            let lastTileInRow = document.querySelector('.row-full').querySelectorAll('.board-tile')[NUM_COLS-1];
             lastTileInRow.innerHTML = '';
             lastTileInRow.classList.add('active-tile');
             document.querySelector('.row-full').classList.remove('row-full');
@@ -89,8 +113,12 @@ function pressKey(key) {
             activeTile.previousElementSibling.innerHTML = '';
             activeTile.classList.remove('active-tile');
             activeTile.previousElementSibling.classList.add('active-tile');
+        } else {
+            showError('Enter a key instead of deleting');            
         }
     }
+
+    animateKey(key);
 }
 
 // Check if the entered word is in the list and how many of the letters are correct
@@ -99,14 +127,20 @@ function checkWord(word, row) {
         showError('The word is not in the list!')
     } else {
         let tiles = row.querySelectorAll('.board-tile');
+
         for (let i = 0; i < word.length; i++) {
             if (word[i] === chosenWord[i]) {                
                 tiles[i].style.backgroundColor = 'var(--green)';
+                tiles[i].style.borderColor = 'var(--green)';
             } else if (chosenWord.includes(word[i])) {
                 tiles[i].style.backgroundColor = 'var(--yellow)';
+                tiles[i].style.borderColor = 'var(--yellow)';
             } else {
                 tiles[i].style.backgroundColor = 'var(--gray)';
+                tiles[i].style.borderColor = 'var(--gray)';
             }
+
+            tiles[i].style.color = 'var(--white)';  
         }
         // Remove class from row and change active tile
         row.classList.remove('row-full');
@@ -117,25 +151,21 @@ function checkWord(word, row) {
     }
 }
 
+// Animate single key on virtual keyboard on key press
+function animateKey(key) {
+    if (key === 'BACKSPACE') {
+        key = 'DEL';    
+    }
+    let keyElement = document.querySelector(`#${key}`);
+    keyElement.style.animationName = 'keyFade';
+}
+
 // Show an error message
 function showError(msg) {
     console.log(msg);
 }
 
 // Function to call when an keyup event is registered
-window.onkeyup = function (key) {
-    pressKey(key.key.toUpperCase());
-}
-
-// Main function that runs when all contents are loaded
-window.onload = function () {
-    fetch('words.json')
-    .then(response => response.json())
-    .then(data => allWords = data.words)
-    .then(() => {
-        // chosenWord = allWords[Math.floor(Math.random() * allWords.length)];
-        chosenWord = 'basic';
-        createBoard();
-        createKeyboard();
-    })
+window.onkeyup = function (keyPressed) {
+    pressKey(keyPressed.key.toUpperCase());
 }

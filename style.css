@@ -1,3 +1,9 @@
+@keyframes keyFade {
+  0%  {background-color: var(--lightGray);}
+  10%  {background-color: var(--gray);}
+  100% {background-color: var(--lightGray);}
+}
+
 /* Global Styles & Colors */
 :root {
   --green: #538d4e;
@@ -64,6 +70,12 @@ body {
   height: 100%;
   width: calc(92%/5);
   box-sizing: border-box;
+  font-size: 5vh;
+  font-weight: bold;
+  color: var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #keyboard {
@@ -90,11 +102,12 @@ body {
   background-color: var(--lightGray);
   border: none;
   font-weight: bold;
-  font-size: 1.5vh;
+  font-size: 2vh;
   /* border: 2x solid green; */
   border-radius: 5px;
   margin: 0% 0.4%;
   cursor: pointer;
+  animation-duration: 0.3s;
 }
 
 #ENTER, #DEL {
