@@ -1,2 +1,2 @@
 # wordle
-A WORDLE app
+A WORDLE application
