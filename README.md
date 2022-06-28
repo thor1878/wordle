@@ -1,2 +1,2 @@
 # wordle
-A cool WORDLE application
+A WORDLE application
